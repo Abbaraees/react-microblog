@@ -1,38 +1,50 @@
+import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
+import Post from "./Post";
+
 export default function Posts() {
-    const posts = [
-      {
-        id: 1,
-        text: 'Hello, world!',
-        timestamp: 'a minute ago',
-        author: {
-          username: 'susan',
-        },
-      },
-      {
-        id: 2,
-        text: 'Second post',
-        timestamp: 'an hour ago',
-        author: {
-          username: 'john',
-        },
-      },
-    ];
-  
-    return (
-      <>
-        {posts.length === 0 ?
-          <p>There are no blog posts.</p>
-        :
-          posts.map(post => {
-            return (
-              <p key={post.id}>
-                <b>{post.author.username}</b> &mdash; {post.timestamp}
-                <br />
-                {post.text}
-              </p>
-            );
-          })
+  const [posts, setPosts] = useState()
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/feed")
+        if (response.ok) {
+          const results = await response.json()
+          setPosts(results.data)
+        } 
+        else {
+          console.log("errorrrr")
+          setPosts(null)
         }
-      </>
-    );
+      }
+      catch {
+        setPosts(null)
+      }
+    })()
+  }, []) 
+  
+  
+  return (
+    <>
+      {posts === undefined ?
+        <Spinner animation="border" />
+      :
+       <>
+
+        {
+          posts === null ?
+            <p>Could not retrieve blog posts.</p>
+          :
+          <>
+            {
+              posts.map(post => <Post key={post.id} post={post} />)
+            }
+          </>
+        }
+       </> 
+
+      }
+    </>
+  );
   }
