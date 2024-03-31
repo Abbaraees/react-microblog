@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import Post from "./Post";
+import { useApi } from '../contexts/ApiProvider'
 
 export default function Posts() {
   const [posts, setPosts] = useState()
+  const api = useApi()
 
   useEffect(() => {
     (async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:5000/api/feed")
-        if (response.ok) {
-          const results = await response.json()
-          setPosts(results.data)
-        } 
-        else {
-          console.log("errorrrr")
-          setPosts(null)
-        }
-      }
-      catch {
+      const response = await api.get("/feed")
+      if (response.ok) {
+        setPosts(results.body.data)
+      } 
+      else {
         setPosts(null)
       }
     })()
-  }, []) 
+  }, [api]) 
   
   
   return (

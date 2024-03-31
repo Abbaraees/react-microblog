@@ -5,12 +5,14 @@ import FeedPage from './pages/FeedPage';
 import ExplorePage from './pages/ExplorePage';
 import LoginPage from './pages/LoginPage';
 import UserPage from './pages/UserPage';
+import ApiProvider from './contexts/ApiProvider';
 
 function App() {
 
   return (
     <Container fluid className="App"> 
       <BrowserRouter>
+      <ApiProvider>
         <Header />
         <Routes>
           <Route path='/' element={<FeedPage />} />
@@ -19,6 +21,7 @@ function App() {
           <Route path='/user/:username' element={<UserPage />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
+      </ApiProvider>
       </BrowserRouter>
     </Container >
   );
