@@ -1,12 +1,12 @@
 const BASE_API_URL = "http://127.0.0.1:5000/api";
 
-class MicroblogApiClient {
+export default class MicroblogApiClient {
   constructor() {
     this.base_url = BASE_API_URL;
   }
 
   async request(options) {
-    let query = URLSearchParams(options.query || {}).toString();
+    let query = new URLSearchParams(options.query || {}).toString();
     
     if (query !== '') {
       query = "?" + query;
