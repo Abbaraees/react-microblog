@@ -43,18 +43,18 @@ export default class MicroblogApiClient {
   }
 
   async get(url, query, options) {
-    return this.request({'Method': 'GET', url, query, ...options})
+    return this.request({'method': 'GET', url, query, ...options})
   }
 
   async post(url, body, options) {
-    return this.request({'Method': 'POST', url, body, ...options})
+    return this.request({'method': 'POST', url, body, ...options})
   }
 
   async put(url, body, options) {
-    return this.request({'Method': 'PUT', url, body, ...options})
+    return this.request({'method': 'PUT', url, body, ...options})
   }
 
   async delete(url, options) {
-    return this.request({'Method': 'DELETE', url, ...options})
+    return this.request({'method': 'DELETE', url, ...options})
   }
 }
