@@ -5,6 +5,7 @@ import InputField from '../components/InputField';
 import { Link } from 'react-router-dom';
 import { useApi } from '../contexts/ApiProvider';
 import { useNavigate } from 'react-router-dom';
+import { useFlash } from '../contexts/FlashProvider';
 
 export default function RegistrationPage() {
   const [formErrors, setFormErrors] = useState({})
@@ -15,6 +16,7 @@ export default function RegistrationPage() {
 
   const api = useApi()
   const navigate = useNavigate()
+  const flash = useFlash()
 
   useEffect(() => {
     usernameField.current.focus()
@@ -35,8 +37,9 @@ export default function RegistrationPage() {
             setFormErrors(data.body.errors.json)
         }
         else {
-            setFormErrors({})
-            navigate('/login')
+          setFormErrors({})
+          flash("You have successfully registered!", 'success')
+          navigate('/login')
         }
     }
   } 
